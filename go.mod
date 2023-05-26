@@ -3,7 +3,7 @@ module github.com/elysium-station/blackfury
 go 1.18
 
 require (
-	github.com/ArableProtocol/acrechain v1.2.0
+	github.com/elysium-station/blackfury v1.2.0
 	github.com/Gravity-Bridge/Gravity-Bridge/module v1.4.1
 	github.com/armon/go-metrics v0.4.0
 	github.com/cosmos/cosmos-sdk v0.45.10
