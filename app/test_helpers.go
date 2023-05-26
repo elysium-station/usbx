@@ -31,7 +31,7 @@ func Setup(isCheckTx bool) *Blackfury {
 
 		app.InitChain(
 			abci.RequestInitChain{
-				ChainId:         "blackfury_5000-101",
+				ChainId:         "highbury_710-101",
 				Validators:      []abci.ValidatorUpdate{},
 				ConsensusParams: simapp.DefaultConsensusParams,
 				AppStateBytes:   stateBytes,

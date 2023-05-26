@@ -35,7 +35,7 @@ The following table provides an example where the second row corresponds to an u
 
 | ChainID          | Identifier | EIP155 Number | Version Number |
 |------------------|------------|---------------|----------------|
-| `blackfury_5000-1` | blackfury    | 5000          | 1              |
-| `blackfury_5000-2` | blackfury    | 5000          | 2              |
+| `highbury_710-1` | blackfury    | 710          | 1              |
+| `highbury_710-2` | blackfury    | 710          | 2              |
 | `...`            | ...        | ...           | ...            |
-| `blackfury_5000-N` | blackfury    | 5000          | N              |
+| `highbury_710-N` | blackfury    | 710          | N              |

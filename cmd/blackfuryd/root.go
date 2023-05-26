@@ -173,7 +173,7 @@ func NewRootCmd(
 		rootOptions,
 	)
 	overwriteFlagDefaults(rootCmd, map[string]string{
-		flags.FlagChainID:        fmt.Sprintf("%s_5000-101", appName),
+		flags.FlagChainID:        fmt.Sprintf("%s_710-101", appName),
 		flags.FlagKeyringBackend: "test",
 	})
 
