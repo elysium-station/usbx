@@ -15,7 +15,7 @@ func TestAllocationAddresses_GetStrategicReserveCustodianAddr(t *testing.T) {
 	addr := types.AllocationAddresses{}
 	require.Equal(t, sdk.AccAddress{}, addr.GetStrategicReserveCustodianAddr())
 
-	addrStr := "black1mnfm9c7cdgqnkk66sganp78m0ydmcr4ppeaeg5"
+	addrStr := "black1mnfm9c7cdgqnkk66sganp78m0ydmcr4pn3eqqv"
 	addr = types.AllocationAddresses{
 		TeamVestingAddr:               addrStr,
 		StrategicReserveCustodianAddr: addrStr,
@@ -29,7 +29,7 @@ func TestAllocationAddresses_GetTeamVestingAddr(t *testing.T) {
 	addr := types.AllocationAddresses{}
 	require.Equal(t, sdk.AccAddress{}, addr.GetTeamVestingAddr())
 
-	addrStr := "black1mnfm9c7cdgqnkk66sganp78m0ydmcr4ppeaeg5"
+	addrStr := "black1mnfm9c7cdgqnkk66sganp78m0ydmcr4pn3eqqv"
 	addr = types.AllocationAddresses{
 		TeamVestingAddr:               addrStr,
 		StrategicReserveCustodianAddr: addrStr,
@@ -50,7 +50,7 @@ func TestAirdrop_GetTargetAddr(t *testing.T) {
 	airdrop := types.Airdrop{}
 	require.Equal(t, sdk.AccAddress{}, airdrop.GetTargetAddr())
 
-	addrStr := "black1mnfm9c7cdgqnkk66sganp78m0ydmcr4ppeaeg5"
+	addrStr := "black1mnfm9c7cdgqnkk66sganp78m0ydmcr4pn3eqqv"
 	airdrop = types.Airdrop{
 		TargetAddr: addrStr,
 	}

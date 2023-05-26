@@ -22,7 +22,7 @@ func TestAirdropsTotalAmountKey(t *testing.T) {
 
 func TestAirdropsKey(t *testing.T) {
 	app.Setup(false)
-	addrStr := "black1mnfm9c7cdgqnkk66sganp78m0ydmcr4ppeaeg5"
+	addrStr := "black1mnfm9c7cdgqnkk66sganp78m0ydmcr4pn3eqqv"
 	addr, err := sdk.AccAddressFromBech32(addrStr)
 	require.NoError(t, err)
 
@@ -32,7 +32,7 @@ func TestAirdropsKey(t *testing.T) {
 
 func TestAirdropsCompletedKey(t *testing.T) {
 	app.Setup(false)
-	addrStr := "black1mnfm9c7cdgqnkk66sganp78m0ydmcr4ppeaeg5"
+	addrStr := "black1mnfm9c7cdgqnkk66sganp78m0ydmcr4pn3eqqv"
 	addr, err := sdk.AccAddressFromBech32(addrStr)
 	require.NoError(t, err)
 

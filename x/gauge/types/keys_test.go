@@ -11,12 +11,12 @@ import (
 
 func TestGaugeKey(t *testing.T) {
 	key := GaugeKey("afury")
-	require.Equal(t, "01616c696f6e", hex.EncodeToString(key))
+	require.Equal(t, "016166757279", hex.EncodeToString(key))
 }
 
 func TestBribeKey(t *testing.T) {
 	key := BribeKey("afury")
-	require.Equal(t, "02616c696f6e", hex.EncodeToString(key))
+	require.Equal(t, "026166757279", hex.EncodeToString(key))
 }
 
 func TestTotalDepositedAmountKey(t *testing.T) {
@@ -46,12 +46,12 @@ func TestRewardKeyPrefix(t *testing.T) {
 
 func TestRewardKey(t *testing.T) {
 	key := RewardKey([]byte("gauge"), "afury")
-	require.Equal(t, "076761756765616c696f6e", hex.EncodeToString(key))
+	require.Equal(t, "0767617567656166757279", hex.EncodeToString(key))
 }
 
 func TestUserRewardKey(t *testing.T) {
 	key := UserRewardKey([]byte("gauge"), "afury", uint64(1000))
-	require.Equal(t, "086761756765616c696f6e00000000000003e8", hex.EncodeToString(key))
+	require.Equal(t, "086761756765616675727900000000000003e8", hex.EncodeToString(key))
 }
 
 func TestUserVeIDByAddressKey(t *testing.T) {
@@ -83,10 +83,10 @@ func TestUserPointKey(t *testing.T) {
 
 func TestRewardEpochKey(t *testing.T) {
 	key := RewardEpochKey([]byte("gauge"), "afury")
-	require.Equal(t, "0e6761756765616c696f6e", hex.EncodeToString(key))
+	require.Equal(t, "0e67617567656166757279", hex.EncodeToString(key))
 }
 
 func TestRewardPointKey(t *testing.T) {
 	key := RewardPointKey([]byte("gauge"), "afury", uint64(1000))
-	require.Equal(t, "0f6761756765616c696f6e00000000000003e8", hex.EncodeToString(key))
+	require.Equal(t, "0f6761756765616675727900000000000003e8", hex.EncodeToString(key))
 }
