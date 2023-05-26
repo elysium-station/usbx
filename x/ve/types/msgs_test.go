@@ -32,27 +32,27 @@ func TestMsgCreate_ValidateBasic(t *testing.T) {
 		{
 			desc:   "ErrAmountNotPositive",
 			sender: "black1mnfm9c7cdgqnkk66sganp78m0ydmcr4pn3eqqv",
-			to:     "black1353a4uac03etdylz86tyq9ssm3x2704jr632l3",
+			to:     "black1353a4uac03etdylz86tyq9ssm3x2704j3j4nhf",
 			amount: sdk.NewCoin(blacktypes.AttoFuryDenom, sdk.NewInt(0)),
 		},
 		{
 			desc:         "ErrPastLockTime",
 			sender:       "black1mnfm9c7cdgqnkk66sganp78m0ydmcr4pn3eqqv",
-			to:           "black1353a4uac03etdylz86tyq9ssm3x2704jr632l3",
+			to:           "black1353a4uac03etdylz86tyq9ssm3x2704j3j4nhf",
 			amount:       sdk.NewCoin(blacktypes.AttoFuryDenom, sdk.NewInt(1)),
 			lockDuration: 0,
 		},
 		{
 			desc:         "ErrTooLongLockTime",
 			sender:       "black1mnfm9c7cdgqnkk66sganp78m0ydmcr4pn3eqqv",
-			to:           "black1353a4uac03etdylz86tyq9ssm3x2704jr632l3",
+			to:           "black1353a4uac03etdylz86tyq9ssm3x2704j3j4nhf",
 			amount:       sdk.NewCoin(blacktypes.AttoFuryDenom, sdk.NewInt(1)),
 			lockDuration: types.MaxLockTime + 1,
 		},
 		{
 			desc:         "valid",
 			sender:       "black1mnfm9c7cdgqnkk66sganp78m0ydmcr4pn3eqqv",
-			to:           "black1353a4uac03etdylz86tyq9ssm3x2704jr632l3",
+			to:           "black1353a4uac03etdylz86tyq9ssm3x2704j3j4nhf",
 			amount:       sdk.NewCoin(blacktypes.AttoFuryDenom, sdk.NewInt(1)),
 			lockDuration: types.MaxLockTime - 1,
 			valid:        true,
@@ -79,7 +79,7 @@ func TestMsgCreate_GetSigners(t *testing.T) {
 	app.Setup(false)
 	msg := &types.MsgCreate{
 		Sender:       "black1mnfm9c7cdgqnkk66sganp78m0ydmcr4pn3eqqv",
-		To:           "black1353a4uac03etdylz86tyq9ssm3x2704jr632l3",
+		To:           "black1353a4uac03etdylz86tyq9ssm3x2704j3j4nhf",
 		Amount:       sdk.NewCoin(blacktypes.AttoFuryDenom, sdk.NewInt(1)),
 		LockDuration: uint64(100000),
 	}
