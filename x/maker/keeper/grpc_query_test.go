@@ -70,7 +70,7 @@ func (suite *KeeperTestSuite) TestAllBackingPools() {
 
 	// add backing pool
 	poolBacking := types.PoolBacking{
-		BlackMinted:  sdk.NewCoin(blackfury.MicroUSMDenom, sdk.NewInt(100)),
+		BlackMinted:  sdk.NewCoin(blackfury.MicroUSBXDenom, sdk.NewInt(100)),
 		Backing:    sdk.NewCoin(suite.bcDenom, sdk.NewInt(10)),
 		FuryBurned: sdk.NewCoin(blackfury.AttoFuryDenom, sdk.NewInt(1000)),
 	}
@@ -84,7 +84,7 @@ func (suite *KeeperTestSuite) TestAllBackingPools() {
 
 	// add another backing pool
 	poolBacking2 := types.PoolBacking{
-		BlackMinted:  sdk.NewCoin(blackfury.MicroUSMDenom, sdk.NewInt(200)),
+		BlackMinted:  sdk.NewCoin(blackfury.MicroUSBXDenom, sdk.NewInt(200)),
 		Backing:    sdk.NewCoin("eth", sdk.NewInt(20)),
 		FuryBurned: sdk.NewCoin(blackfury.AttoFuryDenom, sdk.NewInt(2000)),
 	}
@@ -106,7 +106,7 @@ func (suite *KeeperTestSuite) TestAllCollateralPools() {
 	// add collateral pool
 	poolColl := types.PoolCollateral{
 		Collateral:         sdk.NewCoin(suite.bcDenom, sdk.NewInt(10)),
-		BlackDebt:            sdk.NewCoin(blackfury.MicroUSMDenom, sdk.NewInt(100)),
+		BlackDebt:            sdk.NewCoin(blackfury.MicroUSBXDenom, sdk.NewInt(100)),
 		FuryCollateralized: sdk.NewCoin(blackfury.AttoFuryDenom, sdk.NewInt(1000)),
 	}
 	suite.app.MakerKeeper.SetPoolCollateral(suite.ctx, poolColl)
@@ -120,7 +120,7 @@ func (suite *KeeperTestSuite) TestAllCollateralPools() {
 	// add another collateral pool
 	poolColl2 := types.PoolCollateral{
 		Collateral:         sdk.NewCoin("eth", sdk.NewInt(10)),
-		BlackDebt:            sdk.NewCoin(blackfury.MicroUSMDenom, sdk.NewInt(200)),
+		BlackDebt:            sdk.NewCoin(blackfury.MicroUSBXDenom, sdk.NewInt(200)),
 		FuryCollateralized: sdk.NewCoin(blackfury.AttoFuryDenom, sdk.NewInt(2000)),
 	}
 	suite.app.MakerKeeper.SetPoolCollateral(suite.ctx, poolColl2)
@@ -133,7 +133,7 @@ func (suite *KeeperTestSuite) TestAllCollateralPools() {
 
 func (suite *KeeperTestSuite) TestBackingPool() {
 	poolBacking := types.PoolBacking{
-		BlackMinted:  sdk.NewCoin(blackfury.MicroUSMDenom, sdk.NewInt(200)),
+		BlackMinted:  sdk.NewCoin(blackfury.MicroUSBXDenom, sdk.NewInt(200)),
 		Backing:    sdk.NewCoin(suite.bcDenom, sdk.NewInt(20)),
 		FuryBurned: sdk.NewCoin(blackfury.AttoFuryDenom, sdk.NewInt(2000)),
 	}
@@ -154,7 +154,7 @@ func (suite *KeeperTestSuite) TestBackingPool() {
 func (suite *KeeperTestSuite) TestCollateralPool() {
 	poolCollateral := types.PoolCollateral{
 		Collateral:         sdk.NewCoin(suite.bcDenom, sdk.NewInt(10)),
-		BlackDebt:            sdk.NewCoin(blackfury.MicroUSMDenom, sdk.NewInt(200)),
+		BlackDebt:            sdk.NewCoin(blackfury.MicroUSBXDenom, sdk.NewInt(200)),
 		FuryCollateralized: sdk.NewCoin(blackfury.AttoFuryDenom, sdk.NewInt(2000)),
 	}
 	suite.app.MakerKeeper.SetPoolCollateral(suite.ctx, poolCollateral)
@@ -183,9 +183,9 @@ func (suite *KeeperTestSuite) TestCollateralOfAccount() {
 	accColl := types.AccountCollateral{
 		Account:             accAddress.String(),
 		Collateral:          sdk.NewCoin(suite.bcDenom, sdk.NewInt(100)),
-		BlackDebt:             sdk.NewCoin(blackfury.MicroUSMDenom, sdk.NewInt(200)),
+		BlackDebt:             sdk.NewCoin(blackfury.MicroUSBXDenom, sdk.NewInt(200)),
 		FuryCollateralized:  sdk.NewCoin(blackfury.AttoFuryDenom, sdk.NewInt(1000)),
-		LastInterest:        sdk.NewCoin(blackfury.MicroUSMDenom, sdk.NewInt(10)),
+		LastInterest:        sdk.NewCoin(blackfury.MicroUSBXDenom, sdk.NewInt(10)),
 		LastSettlementBlock: 666,
 	}
 	suite.app.MakerKeeper.SetAccountCollateral(suite.ctx, accAddress, accColl)
@@ -233,19 +233,19 @@ func (suite *KeeperTestSuite) TestTotalBacking() {
 	suite.setupEstimationTest()
 	totalBacking := types.TotalBacking{
 		BackingValue: sdk.OneInt(),
-		BlackMinted:    sdk.NewCoin(blackfury.MicroUSMDenom, sdk.NewInt(100)),
+		BlackMinted:    sdk.NewCoin(blackfury.MicroUSBXDenom, sdk.NewInt(100)),
 		FuryBurned:   sdk.NewCoin(blackfury.AttoFuryDenom, sdk.NewInt(1000)),
 	}
 	suite.app.MakerKeeper.SetTotalBacking(suite.ctx, totalBacking)
 
 	suite.app.MakerKeeper.SetPoolBacking(suite.ctx, types.PoolBacking{
-		BlackMinted:  sdk.NewCoin(blackfury.MicroUSMDenom, sdk.NewInt(100)),
+		BlackMinted:  sdk.NewCoin(blackfury.MicroUSBXDenom, sdk.NewInt(100)),
 		Backing:    sdk.NewCoin(suite.bcDenom, sdk.NewInt(10_000000)),
 		FuryBurned: sdk.NewCoin(blackfury.AttoFuryDenom, sdk.NewInt(1000)),
 	})
 
 	suite.app.MakerKeeper.SetPoolBacking(suite.ctx, types.PoolBacking{
-		BlackMinted:  sdk.NewCoin(blackfury.MicroUSMDenom, sdk.NewInt(200)),
+		BlackMinted:  sdk.NewCoin(blackfury.MicroUSBXDenom, sdk.NewInt(200)),
 		Backing:    sdk.NewCoin("eth", sdk.NewInt(2)),
 		FuryBurned: sdk.NewCoin(blackfury.AttoFuryDenom, sdk.NewInt(2000)),
 	})
@@ -273,7 +273,7 @@ func (suite *KeeperTestSuite) TestTotalCollateral() {
 
 	// set total collateral
 	totalCollateral := types.TotalCollateral{
-		BlackDebt:            sdk.NewCoin(blackfury.MicroUSMDenom, sdk.NewInt(100)),
+		BlackDebt:            sdk.NewCoin(blackfury.MicroUSBXDenom, sdk.NewInt(100)),
 		FuryCollateralized: sdk.NewCoin(blackfury.AttoFuryDenom, sdk.NewInt(1000)),
 	}
 	suite.app.MakerKeeper.SetTotalCollateral(suite.ctx, totalCollateral)

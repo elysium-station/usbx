@@ -20,7 +20,7 @@ func (k Keeper) calculateMintBySwapIn(
 ) {
 	backingIn = sdk.NewCoin(backingDenom, sdk.ZeroInt())
 	furyIn = sdk.NewCoin(blackfury.AttoFuryDenom, sdk.ZeroInt())
-	mintFee = sdk.NewCoin(blackfury.MicroUSMDenom, sdk.ZeroInt())
+	mintFee = sdk.NewCoin(blackfury.MicroUSBXDenom, sdk.ZeroInt())
 
 	err = k.checkMintPriceLowerBound(ctx)
 	if err != nil {
@@ -44,7 +44,7 @@ func (k Keeper) calculateMintBySwapIn(
 
 	mintFee = computeFee(mintOut, backingParams.MintFee)
 	mintTotal := mintOut.Add(mintFee)
-	mintTotalInUSD := mintTotal.Amount.ToDec().Mul(blackfury.MicroUSMTarget)
+	mintTotalInUSD := mintTotal.Amount.ToDec().Mul(blackfury.MicroUSBXTarget)
 
 	_, poolBacking, err := k.getBacking(ctx, backingDenom)
 	if err != nil {
@@ -150,7 +150,7 @@ func (k Keeper) calculateMintBySwapOut(
 		}
 	}
 
-	mintTotal := sdk.NewCoin(blackfury.MicroUSMDenom, mintTotalInUSD.Quo(blackfury.MicroUSMTarget).TruncateInt())
+	mintTotal := sdk.NewCoin(blackfury.MicroUSBXDenom, mintTotalInUSD.Quo(blackfury.MicroUSBXTarget).TruncateInt())
 
 	_, poolBacking, err := k.getBacking(ctx, backingDenom)
 	if err != nil {
@@ -187,10 +187,10 @@ func (k Keeper) calculateBurnBySwapIn(
 ) {
 	backingDenom := backingOutMax.Denom
 
-	burnIn = sdk.NewCoin(blackfury.MicroUSMDenom, sdk.ZeroInt())
+	burnIn = sdk.NewCoin(blackfury.MicroUSBXDenom, sdk.ZeroInt())
 	backingOut = sdk.NewCoin(backingOutMax.Denom, sdk.ZeroInt())
 	furyOut = sdk.NewCoin(blackfury.AttoFuryDenom, sdk.ZeroInt())
-	burnFee = sdk.NewCoin(blackfury.MicroUSMDenom, sdk.ZeroInt())
+	burnFee = sdk.NewCoin(blackfury.MicroUSBXDenom, sdk.ZeroInt())
 
 	err = k.checkBurnPriceUpperBound(ctx)
 	if err != nil {
@@ -251,10 +251,10 @@ func (k Keeper) calculateBurnBySwapIn(
 		burnFeeRate = *backingParams.BurnFee
 	}
 
-	burnInValue := burnActualInUSD.Quo(blackfury.MicroUSMTarget).Quo(sdk.OneDec().Sub(burnFeeRate))
+	burnInValue := burnActualInUSD.Quo(blackfury.MicroUSBXTarget).Quo(sdk.OneDec().Sub(burnFeeRate))
 	burnFeeValue := burnInValue.Mul(burnFeeRate)
-	burnIn = sdk.NewCoin(blackfury.MicroUSMDenom, burnInValue.RoundInt())
-	burnFee = sdk.NewCoin(blackfury.MicroUSMDenom, burnFeeValue.RoundInt())
+	burnIn = sdk.NewCoin(blackfury.MicroUSBXDenom, burnInValue.RoundInt())
+	burnFee = sdk.NewCoin(blackfury.MicroUSBXDenom, burnFeeValue.RoundInt())
 	return
 }
 
@@ -292,7 +292,7 @@ func (k Keeper) calculateBurnBySwapOut(
 
 	burnFee = computeFee(burnIn, backingParams.BurnFee)
 	burnActual := burnIn.Sub(burnFee)
-	burnActualInUSD := burnActual.Amount.ToDec().Mul(blackfury.MicroUSMTarget)
+	burnActualInUSD := burnActual.Amount.ToDec().Mul(blackfury.MicroUSBXTarget)
 
 	backingOut = sdk.NewCoin(backingDenom, sdk.ZeroInt())
 	furyOut = sdk.NewCoin(blackfury.AttoFuryDenom, sdk.ZeroInt())
@@ -609,7 +609,7 @@ func (k Keeper) calculateMintByCollateral(
 	if collateralParams.CatalyticFuryRatio.IsPositive() {
 		availableLTV = availableLTV.Add(actualCatalyticRatio.Mul(collateralParams.LoanToValue.Sub(*collateralParams.BasicLoanToValue)).Quo(*collateralParams.CatalyticFuryRatio))
 	}
-	availableDebtMax := collateralValue.Mul(availableLTV).Quo(blackfury.MicroUSMTarget).TruncateInt()
+	availableDebtMax := collateralValue.Mul(availableLTV).Quo(blackfury.MicroUSBXTarget).TruncateInt()
 
 	if availableDebtMax.LT(accColl.BlackDebt.Amount) {
 		err = sdkerrors.Wrapf(types.ErrAccountInsufficientCollateral, "")
@@ -628,27 +628,27 @@ func computeFee(coin sdk.Coin, rate *sdk.Dec) sdk.Coin {
 }
 
 func (k Keeper) checkMintPriceLowerBound(ctx sdk.Context) error {
-	blackPrice, err := k.oracleKeeper.GetExchangeRate(ctx, blackfury.MicroUSMDenom)
+	blackPrice, err := k.oracleKeeper.GetExchangeRate(ctx, blackfury.MicroUSBXDenom)
 	if err != nil {
 		return err
 	}
 	// market price must be >= target price + mint bias
-	mintPriceLowerBound := blackfury.MicroUSMTarget.Mul(sdk.OneDec().Add(k.MintPriceBias(ctx)))
+	mintPriceLowerBound := blackfury.MicroUSBXTarget.Mul(sdk.OneDec().Add(k.MintPriceBias(ctx)))
 	if blackPrice.LT(mintPriceLowerBound) {
-		return sdkerrors.Wrapf(types.ErrBlackPriceTooLow, "%s price too low: %s", blackfury.MicroUSMDenom, blackPrice)
+		return sdkerrors.Wrapf(types.ErrBlackPriceTooLow, "%s price too low: %s", blackfury.MicroUSBXDenom, blackPrice)
 	}
 	return nil
 }
 
 func (k Keeper) checkBurnPriceUpperBound(ctx sdk.Context) error {
-	blackPrice, err := k.oracleKeeper.GetExchangeRate(ctx, blackfury.MicroUSMDenom)
+	blackPrice, err := k.oracleKeeper.GetExchangeRate(ctx, blackfury.MicroUSBXDenom)
 	if err != nil {
 		return err
 	}
 	// market price must be <= target price - burn bias
-	burnPriceUpperBound := blackfury.MicroUSMTarget.Mul(sdk.OneDec().Sub(k.BurnPriceBias(ctx)))
+	burnPriceUpperBound := blackfury.MicroUSBXTarget.Mul(sdk.OneDec().Sub(k.BurnPriceBias(ctx)))
 	if blackPrice.GT(burnPriceUpperBound) {
-		return sdkerrors.Wrapf(types.ErrBlackPriceTooHigh, "%s price too high: %s", blackfury.MicroUSMDenom, blackPrice)
+		return sdkerrors.Wrapf(types.ErrBlackPriceTooHigh, "%s price too high: %s", blackfury.MicroUSBXDenom, blackPrice)
 	}
 	return nil
 }

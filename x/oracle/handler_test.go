@@ -105,10 +105,10 @@ func TestAggregatePrevoteVote(t *testing.T) {
 	input, h := setup(t)
 
 	salt := "1"
-	exchangeRatesStr := fmt.Sprintf("%s:1000.23,%s:0.29,%s:0.27", denom2, blackfury.MicroUSMDenom, denom1)
-	otherExchangeRateStr := fmt.Sprintf("%s:1000.12,%s:0.29,%s:0.27", denom2, blackfury.MicroUSMDenom, blackfury.MicroUSMDenom)
-	unintendedExchageRateStr := fmt.Sprintf("%s:1000.23,%s:0.29,%s:0.27", denom2, blackfury.MicroUSMDenom, "denom3")
-	invalidExchangeRateStr := fmt.Sprintf("%s:1000.23,%s:0.29,0.27", denom2, blackfury.MicroUSMDenom)
+	exchangeRatesStr := fmt.Sprintf("%s:1000.23,%s:0.29,%s:0.27", denom2, blackfury.MicroUSBXDenom, denom1)
+	otherExchangeRateStr := fmt.Sprintf("%s:1000.12,%s:0.29,%s:0.27", denom2, blackfury.MicroUSBXDenom, blackfury.MicroUSBXDenom)
+	unintendedExchageRateStr := fmt.Sprintf("%s:1000.23,%s:0.29,%s:0.27", denom2, blackfury.MicroUSBXDenom, "denom3")
+	invalidExchangeRateStr := fmt.Sprintf("%s:1000.23,%s:0.29,0.27", denom2, blackfury.MicroUSBXDenom)
 
 	hash := types.GetAggregateVoteHash(salt, exchangeRatesStr, keeper.ValAddrs[0])
 

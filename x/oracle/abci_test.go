@@ -331,14 +331,14 @@ func TestOracleExchangeRate(t *testing.T) {
 	input, h := setup(t)
 
 	denom2RandomExchangeRate := sdk.NewDecWithPrec(1000000000, int64(6)).MulInt64(microUnit)
-	usmRandomExchangeRate := sdk.NewDecWithPrec(1000000, int64(6)).MulInt64(microUnit)
+	usbxRandomExchangeRate := sdk.NewDecWithPrec(1000000, int64(6)).MulInt64(microUnit)
 
 	// denom2 has been chosen as referenceBlack by highest voting power
-	// Account 1, USM, denom2
-	makeAggregatePrevoteAndVote(t, input, h, 0, sdk.DecCoins{{Denom: blackfury.MicroUSMDenom, Amount: usmRandomExchangeRate}, {Denom: denom2, Amount: denom2RandomExchangeRate}}, 0)
+	// Account 1, USBX, denom2
+	makeAggregatePrevoteAndVote(t, input, h, 0, sdk.DecCoins{{Denom: blackfury.MicroUSBXDenom, Amount: usbxRandomExchangeRate}, {Denom: denom2, Amount: denom2RandomExchangeRate}}, 0)
 
-	// Account 2, USM, denom2
-	makeAggregatePrevoteAndVote(t, input, h, 0, sdk.DecCoins{{Denom: blackfury.MicroUSMDenom, Amount: usmRandomExchangeRate}, {Denom: denom2, Amount: denom2RandomExchangeRate}}, 1)
+	// Account 2, USBX, denom2
+	makeAggregatePrevoteAndVote(t, input, h, 0, sdk.DecCoins{{Denom: blackfury.MicroUSBXDenom, Amount: usbxRandomExchangeRate}, {Denom: denom2, Amount: denom2RandomExchangeRate}}, 1)
 
 	// Account 3, denom2, denom1
 	makeAggregatePrevoteAndVote(t, input, h, 0, sdk.DecCoins{{Denom: denom2, Amount: denom2RandomExchangeRate}, {Denom: denom1, Amount: randomExchangeRate}}, 2)
@@ -365,22 +365,22 @@ func TestOracleEnsureSorted(t *testing.T) {
 
 	for i := 0; i < 100; i++ {
 		denom2ExchangeRate1 := sdk.NewDecWithPrec(int64(rand.Uint64()%100000000), 6).MulInt64(microUnit)
-		usmExchangeRate1 := sdk.NewDecWithPrec(int64(rand.Uint64()%100000000), 6).MulInt64(microUnit)
+		usbxExchangeRate1 := sdk.NewDecWithPrec(int64(rand.Uint64()%100000000), 6).MulInt64(microUnit)
 
 		denom2ExchangeRate2 := sdk.NewDecWithPrec(int64(rand.Uint64()%100000000), 6).MulInt64(microUnit)
-		usmExchangeRate2 := sdk.NewDecWithPrec(int64(rand.Uint64()%100000000), 6).MulInt64(microUnit)
+		usbxExchangeRate2 := sdk.NewDecWithPrec(int64(rand.Uint64()%100000000), 6).MulInt64(microUnit)
 
 		denom2ExchangeRate3 := sdk.NewDecWithPrec(int64(rand.Uint64()%100000000), 6).MulInt64(microUnit)
-		usmExchangeRate3 := sdk.NewDecWithPrec(int64(rand.Uint64()%100000000), 6).MulInt64(microUnit)
+		usbxExchangeRate3 := sdk.NewDecWithPrec(int64(rand.Uint64()%100000000), 6).MulInt64(microUnit)
 
-		// Account 1, USM, Denom2
-		makeAggregatePrevoteAndVote(t, input, h, 0, sdk.DecCoins{{Denom: blackfury.MicroUSMDenom, Amount: usmExchangeRate1}, {Denom: denom2, Amount: denom2ExchangeRate1}}, 0)
+		// Account 1, USBX, Denom2
+		makeAggregatePrevoteAndVote(t, input, h, 0, sdk.DecCoins{{Denom: blackfury.MicroUSBXDenom, Amount: usbxExchangeRate1}, {Denom: denom2, Amount: denom2ExchangeRate1}}, 0)
 
-		// Account 2, USM, Denom2
-		makeAggregatePrevoteAndVote(t, input, h, 0, sdk.DecCoins{{Denom: blackfury.MicroUSMDenom, Amount: usmExchangeRate2}, {Denom: denom2, Amount: denom2ExchangeRate2}}, 1)
+		// Account 2, USBX, Denom2
+		makeAggregatePrevoteAndVote(t, input, h, 0, sdk.DecCoins{{Denom: blackfury.MicroUSBXDenom, Amount: usbxExchangeRate2}, {Denom: denom2, Amount: denom2ExchangeRate2}}, 1)
 
-		// Account 3, USM, Denom2
-		makeAggregatePrevoteAndVote(t, input, h, 0, sdk.DecCoins{{Denom: blackfury.MicroUSMDenom, Amount: denom2ExchangeRate3}, {Denom: denom2, Amount: usmExchangeRate3}}, 2)
+		// Account 3, USBX, Denom2
+		makeAggregatePrevoteAndVote(t, input, h, 0, sdk.DecCoins{{Denom: blackfury.MicroUSBXDenom, Amount: denom2ExchangeRate3}, {Denom: denom2, Amount: usbxExchangeRate3}}, 2)
 
 		require.NotPanics(t, func() {
 			oracle.EndBlocker(input.Ctx.WithBlockHeight(1), input.OracleKeeper)
@@ -393,12 +393,12 @@ func TestOracleExchangeRateVal5(t *testing.T) {
 
 	denom2ExchangeRate := sdk.NewDecWithPrec(505000, int64(6)).MulInt64(microUnit)
 	denom2ExchangeRateWithErr := sdk.NewDecWithPrec(500000, int64(6)).MulInt64(microUnit)
-	usmExchangeRate := sdk.NewDecWithPrec(505, int64(6)).MulInt64(microUnit)
-	usmExchangeRateWithErr := sdk.NewDecWithPrec(500, int64(6)).MulInt64(microUnit)
+	usbxExchangeRate := sdk.NewDecWithPrec(505, int64(6)).MulInt64(microUnit)
+	usbxExchangeRateWithErr := sdk.NewDecWithPrec(500, int64(6)).MulInt64(microUnit)
 
 	// denom2 has been chosen as referenceBlack by highest voting power
-	// Account 1, denom2, USM
-	makeAggregatePrevoteAndVote(t, input, h, 0, sdk.DecCoins{{Denom: denom2, Amount: denom2ExchangeRate}, {Denom: blackfury.MicroUSMDenom, Amount: usmExchangeRate}}, 0)
+	// Account 1, denom2, USBX
+	makeAggregatePrevoteAndVote(t, input, h, 0, sdk.DecCoins{{Denom: denom2, Amount: denom2ExchangeRate}, {Denom: blackfury.MicroUSBXDenom, Amount: usbxExchangeRate}}, 0)
 
 	// Account 2, denom2
 	makeAggregatePrevoteAndVote(t, input, h, 0, sdk.DecCoins{{Denom: denom2, Amount: denom2ExchangeRate}}, 1)
@@ -406,11 +406,11 @@ func TestOracleExchangeRateVal5(t *testing.T) {
 	// Account 3, denom2
 	makeAggregatePrevoteAndVote(t, input, h, 0, sdk.DecCoins{{Denom: denom2, Amount: denom2ExchangeRate}}, 2)
 
-	// Account 4, denom2, USM
-	makeAggregatePrevoteAndVote(t, input, h, 0, sdk.DecCoins{{Denom: denom2, Amount: denom2ExchangeRateWithErr}, {Denom: blackfury.MicroUSMDenom, Amount: usmExchangeRateWithErr}}, 3)
+	// Account 4, denom2, USBX
+	makeAggregatePrevoteAndVote(t, input, h, 0, sdk.DecCoins{{Denom: denom2, Amount: denom2ExchangeRateWithErr}, {Denom: blackfury.MicroUSBXDenom, Amount: usbxExchangeRateWithErr}}, 3)
 
-	// Account 5, denom2, USM
-	makeAggregatePrevoteAndVote(t, input, h, 0, sdk.DecCoins{{Denom: denom2, Amount: denom2ExchangeRateWithErr}, {Denom: blackfury.MicroUSMDenom, Amount: usmExchangeRateWithErr}}, 4)
+	// Account 5, denom2, USBX
+	makeAggregatePrevoteAndVote(t, input, h, 0, sdk.DecCoins{{Denom: denom2, Amount: denom2ExchangeRateWithErr}, {Denom: blackfury.MicroUSBXDenom, Amount: usbxExchangeRateWithErr}}, 4)
 
 	rewardAmt := sdk.NewInt(100000000)
 	err := input.BankKeeper.MintCoins(input.Ctx, types.ModuleName, sdk.NewCoins(sdk.NewCoin(blackfury.AttoFuryDenom, rewardAmt)))
@@ -420,15 +420,15 @@ func TestOracleExchangeRateVal5(t *testing.T) {
 
 	denom2Rate, err := input.OracleKeeper.GetExchangeRate(input.Ctx, denom2)
 	require.NoError(t, err)
-	usm, err := input.OracleKeeper.GetExchangeRate(input.Ctx, blackfury.MicroUSMDenom)
+	usbx, err := input.OracleKeeper.GetExchangeRate(input.Ctx, blackfury.MicroUSBXDenom)
 	require.NoError(t, err)
 
 	// legacy version case
-	require.NotEqual(t, usmExchangeRateWithErr, usm)
+	require.NotEqual(t, usbxExchangeRateWithErr, usbx)
 
 	// new version case
 	require.Equal(t, denom2ExchangeRate, denom2Rate)
-	require.Equal(t, usmExchangeRate, usm)
+	require.Equal(t, usbxExchangeRate, usbx)
 
 	rewardDistributedWindow := input.OracleKeeper.RewardDistributionWindow(input.Ctx)
 	expectedRewardAmt := sdk.NewDecFromInt(rewardAmt.QuoRaw(8).MulRaw(2)).QuoInt64(int64(rewardDistributedWindow)).TruncateInt()

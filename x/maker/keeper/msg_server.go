@@ -544,7 +544,7 @@ func (m msgServer) RedeemCollateral(c context.Context, msg *types.MsgRedeemColla
 		return nil, err
 	}
 
-	if accColl.BlackDebt.Amount.ToDec().Mul(blackfury.MicroUSMTarget).GT(maxDebtInUSD) {
+	if accColl.BlackDebt.Amount.ToDec().Mul(blackfury.MicroUSBXTarget).GT(maxDebtInUSD) {
 		return nil, sdkerrors.Wrapf(types.ErrAccountInsufficientCollateral, "account collateral insufficient: %s", collateralDenom)
 	}
 
@@ -606,7 +606,7 @@ func (m msgServer) LiquidateCollateral(c context.Context, msg *types.MsgLiquidat
 
 	// check whether undercollateralized
 	liquidationValue := accColl.Collateral.Amount.ToDec().Mul(collateralPrice).Mul(*collateralParams.LiquidationThreshold)
-	if accColl.BlackDebt.Amount.ToDec().Mul(blackfury.MicroUSMTarget).LT(liquidationValue) {
+	if accColl.BlackDebt.Amount.ToDec().Mul(blackfury.MicroUSBXTarget).LT(liquidationValue) {
 		return nil, sdkerrors.Wrap(types.ErrNotUndercollateralized, "")
 	}
 
@@ -617,17 +617,17 @@ func (m msgServer) LiquidateCollateral(c context.Context, msg *types.MsgLiquidat
 	liquidationFee := msg.Collateral.Amount.ToDec().Mul(*collateralParams.LiquidationFee)
 	commissionFee := sdk.NewCoin(collateralDenom, liquidationFee.Mul(m.Keeper.LiquidationCommissionFee(ctx)).TruncateInt())
 	collateralOut := msg.Collateral.Sub(commissionFee)
-	repayIn := sdk.NewCoin(blackfury.MicroUSMDenom, msg.Collateral.Amount.ToDec().Sub(liquidationFee).Mul(collateralPrice).Quo(blackfury.MicroUSMTarget).TruncateInt())
+	repayIn := sdk.NewCoin(blackfury.MicroUSBXDenom, msg.Collateral.Amount.ToDec().Sub(liquidationFee).Mul(collateralPrice).Quo(blackfury.MicroUSBXTarget).TruncateInt())
 
 	if msg.RepayInMax.IsLT(repayIn) {
 		return nil, sdkerrors.Wrap(types.ErrBlackSlippage, "")
 	}
 
 	// repay for debtor as much as possible, and repay interest first
-	repayDebt := sdk.NewCoin(blackfury.MicroUSMDenom, sdk.MinInt(accColl.BlackDebt.Amount, repayIn.Amount))
+	repayDebt := sdk.NewCoin(blackfury.MicroUSBXDenom, sdk.MinInt(accColl.BlackDebt.Amount, repayIn.Amount))
 	blackRefund := repayIn.Sub(repayDebt)
 
-	repayInterest := sdk.NewCoin(blackfury.MicroUSMDenom, sdk.MinInt(accColl.LastInterest.Amount, repayDebt.Amount))
+	repayInterest := sdk.NewCoin(blackfury.MicroUSBXDenom, sdk.MinInt(accColl.LastInterest.Amount, repayDebt.Amount))
 	accColl.LastInterest = accColl.LastInterest.Sub(repayInterest)
 
 	accColl.BlackDebt = accColl.BlackDebt.Sub(repayDebt)
@@ -719,9 +719,9 @@ func (k Keeper) getCollateral(ctx sdk.Context, account sdk.AccAddress, denom str
 			acc = types.AccountCollateral{
 				Account:             account.String(),
 				Collateral:          sdk.NewCoin(denom, sdk.ZeroInt()),
-				BlackDebt:             sdk.NewCoin(blackfury.MicroUSMDenom, sdk.ZeroInt()),
+				BlackDebt:             sdk.NewCoin(blackfury.MicroUSBXDenom, sdk.ZeroInt()),
 				FuryCollateralized:  sdk.NewCoin(blackfury.AttoFuryDenom, sdk.ZeroInt()),
-				LastInterest:        sdk.NewCoin(blackfury.MicroUSMDenom, sdk.ZeroInt()),
+				LastInterest:        sdk.NewCoin(blackfury.MicroUSBXDenom, sdk.ZeroInt()),
 				LastSettlementBlock: ctx.BlockHeight(),
 			}
 		} else {

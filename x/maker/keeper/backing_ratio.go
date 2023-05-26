@@ -18,18 +18,18 @@ func (k Keeper) AdjustBackingRatio(ctx sdk.Context) {
 		return
 	}
 	backingRatio := k.GetBackingRatio(ctx)
-	priceBand := blackfury.MicroUSMTarget.Mul(k.BackingRatioPriceBand(ctx))
+	priceBand := blackfury.MicroUSBXTarget.Mul(k.BackingRatioPriceBand(ctx))
 
-	blackPrice, err := k.oracleKeeper.GetExchangeRate(ctx, blackfury.MicroUSMDenom)
+	blackPrice, err := k.oracleKeeper.GetExchangeRate(ctx, blackfury.MicroUSBXDenom)
 	if err != nil {
 		panic(err)
 	}
 
-	if blackPrice.GT(blackfury.MicroUSMTarget.Add(priceBand)) {
+	if blackPrice.GT(blackfury.MicroUSBXTarget.Add(priceBand)) {
 		// black price is too high
 		// decrease backing ratio; min 0%
 		backingRatio = sdk.MaxDec(backingRatio.Sub(ratioStep), sdk.ZeroDec())
-	} else if blackPrice.LT(blackfury.MicroUSMTarget.Sub(priceBand)) {
+	} else if blackPrice.LT(blackfury.MicroUSBXTarget.Sub(priceBand)) {
 		// black price is too low
 		// increase backing ratio; max 100%
 		backingRatio = sdk.MinDec(backingRatio.Add(ratioStep), sdk.OneDec())

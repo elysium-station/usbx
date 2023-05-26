@@ -25,7 +25,7 @@ assets settlement center and experimental DeFi innovation zone.
 
 Here’s a glance at some key features of Blackfury:
 
-- System native stablecoin **BlackUSD**, or **USM**
+- System native stablecoin **BlackUSD**, or **USBX**
 - Pegging through partial backing/collateral and partial algorithmic
 - ve(3,3) time-locked of native **Fury** and proportional incentive
 - Web3 and EVM compatibility
@@ -38,7 +38,7 @@ Here’s a glance at some key features of Blackfury:
 The blackfury system consists of two main native coins, Black and Fury.
 
 - **Black**: Stablecoins that track the price of fiat currencies, and they are named for their fiat counterparts. In the
-  early stage of the mainnet launch, it will mainly issue **BlackUSD**, or **USM**, which tracks/pegs the price of $USD.
+  early stage of the mainnet launch, it will mainly issue **BlackUSD**, or **USBX**, which tracks/pegs the price of $USD.
 - **Fury**: Blackfury blockchain's native staking coin that partially absorbs the price volatility of Black. Users stake
   Fury to validators to add blocks of transactions to the blockchain, and earn various fees and rewards. Holders of Fury
   also can vote on proposals and participate in on-chain governance.

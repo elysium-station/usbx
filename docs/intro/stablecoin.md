@@ -52,7 +52,7 @@ external human strategies.
 For this reason, we have avoided becoming a pure algorithmic stablecoin. We have seen firsthand that the highly
 respected and massively huge [Terra](https://terra.money) still cannot escape the spiral of collapse caused by targeted
 sniping during extreme market conditions. The two kinds of minting/burning mechanisms for Blackfury stablecoin (called Black
-USD or USM) are as follows.
+USD or USBX) are as follows.
 
 ### Fractional-Backing-Algorithmic (FBA)
 
@@ -61,25 +61,25 @@ algorithmic supply. We define the ratio of backing value to algorithmic value is
 
 What we need to highlight here is the algorithmic part. As mentioned above, pure algorithmic stablecoins are extremely
 risky. However, as a native token that captures the value of the network, it makes sense for FURY to participate in the
-USM minting process, but the participation extent needs to be regulated by the system based on the current demand for
-USM. Especially at the beginning of the network, we recommend setting the BR to 95%, which means that only $0.05 worth
-of FURYs are allowed to be minted for 1 $USM. Formula follows:
+USBX minting process, but the participation extent needs to be regulated by the system based on the current demand for
+USBX. Especially at the beginning of the network, we recommend setting the BR to 95%, which means that only $0.05 worth
+of FURYs are allowed to be minted for 1 $USBX. Formula follows:
 
 ```
 For 0 < BR <= 1,
-BackingValue = MintUSM * BR
-FURYValue = MintUSM * (1 - BR)
+BackingValue = MintUSBX * BR
+FURYValue = MintUSBX * (1 - BR)
 ```
 
-When the market demand for USM rises, the system automatically decreases the BR value, allowing more FURYs to be burned
-in the minting of USMs. When the market demand for USMs falls, the system automatically increases the BR value, allowing
-fewer FURYs to be burned in the minting of USMs. In turn, USMs can be burned to swap for the reserved backing assets and
+When the market demand for USBX rises, the system automatically decreases the BR value, allowing more FURYs to be burned
+in the minting of USBXs. When the market demand for USBXs falls, the system automatically increases the BR value, allowing
+fewer FURYs to be burned in the minting of USBXs. In turn, USBXs can be burned to swap for the reserved backing assets and
 minted FURYs, again in a proportion controlled by the BR value.
 
-This dynamic adaptive capability to changes in market demand absorbs the possible volatility of USM into the composition
+This dynamic adaptive capability to changes in market demand absorbs the possible volatility of USBX into the composition
 of the reserving asset portfolio of the system pool. Any small disturbance is absorbed very quickly, avoiding the
 accumulation of large fluctuations with consequences that the system cannot resist. We believe that the system's
-worst-case response mechanism is the cornerstone of maintaining USM pegging.
+worst-case response mechanism is the cornerstone of maintaining USBX pegging.
 
 ![fractional-backing-algorithmic](../images/fba.png)
 
@@ -89,25 +89,25 @@ Overcollateralization is the most reliable and tried-and-true method of minting 
 is [DAI](https://makerdao.com). Over-collateralized assets can be volatile assets such as ETH and BTC, or other
 stablecoin assets like USDC.
 
-Overcollateralization means that the amount of the maximum mintable USMs must be less than the value of the
+Overcollateralization means that the amount of the maximum mintable USBXs must be less than the value of the
 collateralized asset, and the ratio between them is called **LTV (Loan-To-Value)**. For example, if the LTV is 67% and
-the collateral value is $100, then a maximum of 67 $USM can be minted. We also define the **Over-Collateralized Rate (OCR)**, which is equal to the reciprocal of the LTV; i.e., if the LTV is 67%, then the OCR is 150%.
+the collateral value is $100, then a maximum of 67 $USBX can be minted. We also define the **Over-Collateralized Rate (OCR)**, which is equal to the reciprocal of the LTV; i.e., if the LTV is 67%, then the OCR is 150%.
 
 We have made a slight change to the overcollateralization method by also defining **Basic LTV**, which is generally less
-than LTV, i.e., the user can only mint USM at the Basic LTV ratio of the collateral value in the most basic case; if the
+than LTV, i.e., the user can only mint USBX at the Basic LTV ratio of the collateral value in the most basic case; if the
 user wants to achieve the maximum LTV ratio, it must burn a certain amount of FURY, which we call the ratio of the
-maximum burned FURY value to the minted USM value as **CLR (Catalytic Fury Ratio)**. Taking the previous example, with
-an LTV of 67%, a Basic LTV of 45%, and a CLR of 2%, a user can mint a maximum of 45 $USM when the collateral value is
-$100; if the user tries to mint 67 $USM, he needs to burn $67 * 2% = $1.34 worth of FURYs; if he tries to mint 55 $USM,
+maximum burned FURY value to the minted USBX value as **CLR (Catalytic Fury Ratio)**. Taking the previous example, with
+an LTV of 67%, a Basic LTV of 45%, and a CLR of 2%, a user can mint a maximum of 45 $USBX when the collateral value is
+$100; if the user tries to mint 67 $USBX, he needs to burn $67 * 2% = $1.34 worth of FURYs; if he tries to mint 55 $USBX,
 he needs to burn $55 * 2% * ( 55% - 45%) / (67% - 45%) = $0.5 value of FURY, where the CLR involved in the calculation
 is adjusted by the position of the actual LTV in a linear scale between the Basic LTV and the maximum LTV. The formula
 is:
 
 ```
-MaxUSM = CollateralValue * LTV
-BasicUSM = CollateralValue * BasicLTV
-For MintUSM, and BasicUSM < MintUSM < MaxUSM,
-BurnedFURYValue = MintUSM * CLR * (MintUSM / CollateralValue - BasicLTV) / (LTV - BasicLTV)
+MaxUSBX = CollateralValue * LTV
+BasicUSBX = CollateralValue * BasicLTV
+For MintUSBX, and BasicUSBX < MintUSBX < MaxUSBX,
+BurnedFURYValue = MintUSBX * CLR * (MintUSBX / CollateralValue - BasicLTV) / (LTV - BasicLTV)
 ```
 
 ![over-collateralized-catalytic](../images/occ.png)
@@ -117,13 +117,13 @@ BurnedFURYValue = MintUSM * CLR * (MintUSM / CollateralValue - BasicLTV) / (LTV 
 Blackfury has a built-in price oracle module that periodically accepts near real-time quotes from active staking
 validators, and first removes outliers with large deviations, and then takes the median as the final true and fair
 on-chain price. Since the Blackfury stablecoin is anchored in $USD, the oracle quotes will also be denominated in $USD,
-which is actually `$1 * 1e-6` given the need for some precision. The tokens to be quoted are first FURY and USM, and
+which is actually `$1 * 1e-6` given the need for some precision. The tokens to be quoted are first FURY and USBX, and
 then all the asset tokens used to back or collateralize the stablecoin (e.g. ETH) will also need to be quoted. Blackfury
 encourages staking validators to take diversified market price sources that help the oracle's final quotes faithfully
 reflect real market prices.
 
 The price data from the oracle will be directly applied to the exchange rate calculations during the minting and burning
-of USM, which is critical to the operation of the entire system and the pegging stability of USM. Therefore, Blackfury
+of USBX, which is critical to the operation of the entire system and the pegging stability of USBX. Therefore, Blackfury
 does not rule out the possibility of introducing quotes from professional oracles with sufficient credibility, such as
 Chainlink, in the future.
 
@@ -133,7 +133,7 @@ The supply and demand for stablecoins is invisibly regulated by the free market,
 pegged fiat currencies (e.g. USD), and generally works well, with both suppliers and demanders satisfying their trading
 positions well. Blackfury will have a good variety of configurable system-level parameters and will also have a range of
 built-in adaptive monetary policies that are robust enough to deal with common bad cases. Blackfury will be iteratively
-upgraded to incorporate more and better auto-adjustment strategies as the USM becomes more widely used.
+upgraded to incorporate more and better auto-adjustment strategies as the USBX becomes more widely used.
 
 However, just as almost all software systems cannot respond to extreme situations in a very timely manner and always
 make the very right changes, we cannot fully trust that established parameter auto-adjustment strategies will always
@@ -146,9 +146,9 @@ the Blackfury stablecoin system.
 ## Diverse Application Scenarios with Sufficient Breadth and Depth
 
 With the advent of the Web3 era, crypto technologies and protocols will be used in a wider and deeper variety of
-scenarios, and we aim to make more people want to hold and use Blackfury stablecoins in this wave sweeping the globe. USM
+scenarios, and we aim to make more people want to hold and use Blackfury stablecoins in this wave sweeping the globe. USBX
 can be used as the basic exchange medium for various DeFi protocols or projects on the chain, as a circulating currency
-within GameFi, and also used by NFT creators and collectors to value their NFTs. USM is inherently suited for pricing
+within GameFi, and also used by NFT creators and collectors to value their NFTs. USBX is inherently suited for pricing
 and payment for data sharing and rentals in new Web3 social and information applications that emphasize user ownership
-of data. USM does not exclude the connection to the offline world, but we believe it would be a sign of Blackfury's
+of data. USBX does not exclude the connection to the offline world, but we believe it would be a sign of Blackfury's
 success to be one of the circulation currencies in the vast Web3 world of the future.

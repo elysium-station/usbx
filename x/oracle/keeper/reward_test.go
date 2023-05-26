@@ -47,7 +47,7 @@ func TestRewardBallotWinners(t *testing.T) {
 	}
 
 	// Prepare reward pool
-	givingAmt := sdk.NewCoins(sdk.NewInt64Coin(blackfury.AttoFuryDenom, 30000000), sdk.NewInt64Coin(blackfury.MicroUSMDenom, 40000000))
+	givingAmt := sdk.NewCoins(sdk.NewInt64Coin(blackfury.AttoFuryDenom, 30000000), sdk.NewInt64Coin(blackfury.MicroUSBXDenom, 40000000))
 	acc := input.AccountKeeper.GetModuleAccount(ctx, types.ModuleName)
 	err = FundAccount(input, acc.GetAddress(), givingAmt)
 	require.NoError(t, err)
@@ -66,13 +66,13 @@ func TestRewardBallotWinners(t *testing.T) {
 	outstandingRewards, _ := outstandingRewardsDec.TruncateDecimal()
 	require.Equal(t, sdk.NewDecFromInt(givingAmt.AmountOf(blackfury.AttoFuryDenom)).QuoInt64(votePeriodsPerWindow).QuoInt64(3).TruncateInt(),
 		outstandingRewards.AmountOf(blackfury.AttoFuryDenom))
-	require.Equal(t, sdk.NewDecFromInt(givingAmt.AmountOf(blackfury.MicroUSMDenom)).QuoInt64(votePeriodsPerWindow).QuoInt64(3).TruncateInt(),
-		outstandingRewards.AmountOf(blackfury.MicroUSMDenom))
+	require.Equal(t, sdk.NewDecFromInt(givingAmt.AmountOf(blackfury.MicroUSBXDenom)).QuoInt64(votePeriodsPerWindow).QuoInt64(3).TruncateInt(),
+		outstandingRewards.AmountOf(blackfury.MicroUSBXDenom))
 
 	outstandingRewardsDec1 := input.DistrKeeper.GetValidatorOutstandingRewardsCoins(ctx, addr1)
 	outstandingRewards1, _ := outstandingRewardsDec1.TruncateDecimal()
 	require.Equal(t, sdk.NewDecFromInt(givingAmt.AmountOf(blackfury.AttoFuryDenom)).QuoInt64(votePeriodsPerWindow).QuoInt64(3).MulInt64(2).TruncateInt(),
 		outstandingRewards1.AmountOf(blackfury.AttoFuryDenom))
-	require.Equal(t, sdk.NewDecFromInt(givingAmt.AmountOf(blackfury.MicroUSMDenom)).QuoInt64(votePeriodsPerWindow).QuoInt64(3).MulInt64(2).TruncateInt(),
-		outstandingRewards1.AmountOf(blackfury.MicroUSMDenom))
+	require.Equal(t, sdk.NewDecFromInt(givingAmt.AmountOf(blackfury.MicroUSBXDenom)).QuoInt64(votePeriodsPerWindow).QuoInt64(3).MulInt64(2).TruncateInt(),
+		outstandingRewards1.AmountOf(blackfury.MicroUSBXDenom))
 }

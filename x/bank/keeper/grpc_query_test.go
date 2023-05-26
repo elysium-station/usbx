@@ -149,20 +149,20 @@ func (suite *KeeperTestSuite) TestKeeper_DenomsMetadata() {
 	var (
 		t        = suite.T()
 		k        = suite.app.BankKeeper
-		denom    = blacktypes.MicroUSMDenom
+		denom    = blacktypes.MicroUSBXDenom
 		base     = denom
 		display  = base[1:]
-		uusmMeta = banktypes.Metadata{
+		uusbxMeta = banktypes.Metadata{
 			Description: "The native stable token of the Blackfury.",
 			DenomUnits: []*banktypes.DenomUnit{
-				{Denom: "u" + display, Exponent: uint32(0), Aliases: []string{"micro" + display}}, // e.g., uusm
-				{Denom: "m" + display, Exponent: uint32(3), Aliases: []string{"milli" + display}}, // e.g., musm
-				{Denom: display, Exponent: uint32(6), Aliases: []string{""}},                      // e.g., usm
+				{Denom: "u" + display, Exponent: uint32(0), Aliases: []string{"micro" + display}}, // e.g., uusbx
+				{Denom: "m" + display, Exponent: uint32(3), Aliases: []string{"milli" + display}}, // e.g., musbx
+				{Denom: display, Exponent: uint32(6), Aliases: []string{""}},                      // e.g., usbx
 			},
 			Base:    base,
 			Display: display,
-			Name:    strings.ToUpper(display), // e.g., USM
-			Symbol:  strings.ToUpper(display), // e.g., USM
+			Name:    strings.ToUpper(display), // e.g., USBX
+			Symbol:  strings.ToUpper(display), // e.g., USBX
 		}
 	)
 
@@ -173,13 +173,13 @@ func (suite *KeeperTestSuite) TestKeeper_DenomsMetadata() {
 	require.NoError(t, err)
 	meta := res.Metadatas[0]
 	require.Equal(t, 1, len(res.Metadatas))
-	require.Equal(t, uusmMeta.Description, meta.Description)
-	require.Equal(t, uusmMeta.Base, meta.Base)
-	require.Equal(t, uusmMeta.Display, meta.Display)
-	require.Equal(t, uusmMeta.Name, meta.Name)
-	require.Equal(t, uusmMeta.Symbol, meta.Symbol)
-	require.Equal(t, uusmMeta.DenomUnits[0], meta.DenomUnits[0])
-	require.Equal(t, uusmMeta.DenomUnits[1], meta.DenomUnits[1])
+	require.Equal(t, uusbxMeta.Description, meta.Description)
+	require.Equal(t, uusbxMeta.Base, meta.Base)
+	require.Equal(t, uusbxMeta.Display, meta.Display)
+	require.Equal(t, uusbxMeta.Name, meta.Name)
+	require.Equal(t, uusbxMeta.Symbol, meta.Symbol)
+	require.Equal(t, uusbxMeta.DenomUnits[0], meta.DenomUnits[0])
+	require.Equal(t, uusbxMeta.DenomUnits[1], meta.DenomUnits[1])
 	require.Equal(t, uint64(1), res.Pagination.Total)
 }
 
@@ -188,20 +188,20 @@ func (suite *KeeperTestSuite) TestKeeper_DenomMetadata() {
 	var (
 		t        = suite.T()
 		k        = suite.app.BankKeeper
-		denom    = blacktypes.MicroUSMDenom
+		denom    = blacktypes.MicroUSBXDenom
 		base     = denom
 		display  = base[1:]
-		uusmMeta = banktypes.Metadata{
+		uusbxMeta = banktypes.Metadata{
 			Description: "The native stable token of the Blackfury.",
 			DenomUnits: []*banktypes.DenomUnit{
-				{Denom: "u" + display, Exponent: uint32(0), Aliases: []string{"micro" + display}}, // e.g., uusm
-				{Denom: "m" + display, Exponent: uint32(3), Aliases: []string{"milli" + display}}, // e.g., musm
-				{Denom: display, Exponent: uint32(6), Aliases: []string{""}},                      // e.g., usm
+				{Denom: "u" + display, Exponent: uint32(0), Aliases: []string{"micro" + display}}, // e.g., uusbx
+				{Denom: "m" + display, Exponent: uint32(3), Aliases: []string{"milli" + display}}, // e.g., musbx
+				{Denom: display, Exponent: uint32(6), Aliases: []string{""}},                      // e.g., usbx
 			},
 			Base:    base,
 			Display: display,
-			Name:    strings.ToUpper(display), // e.g., USM
-			Symbol:  strings.ToUpper(display), // e.g., USM
+			Name:    strings.ToUpper(display), // e.g., USBX
+			Symbol:  strings.ToUpper(display), // e.g., USBX
 		}
 	)
 	res, err := k.DenomMetadata(sdk.WrapSDKContext(suite.ctx), nil)
@@ -223,11 +223,11 @@ func (suite *KeeperTestSuite) TestKeeper_DenomMetadata() {
 	res, err = k.DenomMetadata(sdk.WrapSDKContext(suite.ctx), req)
 	require.NoError(t, err)
 	meta := res.Metadata
-	require.Equal(t, uusmMeta.Description, meta.Description)
-	require.Equal(t, uusmMeta.Base, meta.Base)
-	require.Equal(t, uusmMeta.Display, meta.Display)
-	require.Equal(t, uusmMeta.Name, meta.Name)
-	require.Equal(t, uusmMeta.Symbol, meta.Symbol)
-	require.Equal(t, uusmMeta.DenomUnits[0], meta.DenomUnits[0])
-	require.Equal(t, uusmMeta.DenomUnits[1], meta.DenomUnits[1])
+	require.Equal(t, uusbxMeta.Description, meta.Description)
+	require.Equal(t, uusbxMeta.Base, meta.Base)
+	require.Equal(t, uusbxMeta.Display, meta.Display)
+	require.Equal(t, uusbxMeta.Name, meta.Name)
+	require.Equal(t, uusbxMeta.Symbol, meta.Symbol)
+	require.Equal(t, uusbxMeta.DenomUnits[0], meta.DenomUnits[0])
+	require.Equal(t, uusbxMeta.DenomUnits[1], meta.DenomUnits[1])
 }

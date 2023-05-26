@@ -234,7 +234,7 @@ func CreateTestInput(t *testing.T) TestInput {
 	keeper.SetParams(ctx, defaults)
 
 	keeper.SetVoteTarget(ctx, blackfury.AttoFuryDenom)
-	keeper.SetVoteTarget(ctx, blackfury.MicroUSMDenom)
+	keeper.SetVoteTarget(ctx, blackfury.MicroUSBXDenom)
 
 	return TestInput{ctx, legacyAmino, accountKeeper, bankKeeper, *keeper, stakingKeeper, distrKeeper}
 }

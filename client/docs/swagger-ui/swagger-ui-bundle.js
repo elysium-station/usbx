@@ -18396,7 +18396,7 @@
             plusdu: "⨥",
             pluse: "⩲",
             PlusMinus: "±",
-            plusmn: "±",
+            plusbxn: "±",
             plussim: "⨦",
             plustwo: "⨧",
             pm: "±",

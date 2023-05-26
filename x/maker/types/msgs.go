@@ -53,7 +53,7 @@ func (m *MsgMintBySwap) ValidateBasic() error {
 			return sdkerrors.Wrapf(sdkerrors.ErrInvalidAddress, "invalid receiver address (%s)", err)
 		}
 	}
-	if m.MintOutMin.Denom != blackfury.MicroUSMDenom {
+	if m.MintOutMin.Denom != blackfury.MicroUSBXDenom {
 		return sdkerrors.Wrapf(sdkerrors.ErrInvalidCoins, "invalid coin: %s", m.MintOutMin.Denom)
 	}
 	if m.FuryInMax.Denom != blackfury.AttoFuryDenom {
@@ -109,7 +109,7 @@ func (m *MsgBurnBySwap) ValidateBasic() error {
 			return sdkerrors.Wrapf(sdkerrors.ErrInvalidAddress, "invalid receiver address (%s)", err)
 		}
 	}
-	if m.BurnIn.Denom != blackfury.MicroUSMDenom {
+	if m.BurnIn.Denom != blackfury.MicroUSBXDenom {
 		return sdkerrors.Wrapf(sdkerrors.ErrInvalidCoins, "invalid coin: %s", m.BurnIn.Denom)
 	}
 	if m.FuryOutMin.Denom != blackfury.AttoFuryDenom {
@@ -247,7 +247,7 @@ func (m *MsgMintByCollateral) ValidateBasic() error {
 			return sdkerrors.Wrapf(sdkerrors.ErrInvalidAddress, "invalid receiver address (%s)", err)
 		}
 	}
-	if m.MintOut.Denom != blackfury.MicroUSMDenom {
+	if m.MintOut.Denom != blackfury.MicroUSBXDenom {
 		return sdkerrors.Wrapf(sdkerrors.ErrInvalidCoins, "invalid coin: %s", m.MintOut.Denom)
 	}
 	if !m.MintOut.Amount.IsPositive() {
@@ -282,7 +282,7 @@ func (m *MsgBurnByCollateral) ValidateBasic() error {
 	if err != nil {
 		return sdkerrors.Wrapf(sdkerrors.ErrInvalidAddress, "invalid sender address (%s)", err)
 	}
-	if m.RepayInMax.Denom != blackfury.MicroUSMDenom {
+	if m.RepayInMax.Denom != blackfury.MicroUSBXDenom {
 		return sdkerrors.Wrapf(sdkerrors.ErrInvalidCoins, "invalid coin: %s", m.RepayInMax.Denom)
 	}
 	if !m.RepayInMax.Amount.IsPositive() {
@@ -424,7 +424,7 @@ func (m *MsgLiquidateCollateral) ValidateBasic() error {
 	if !m.Collateral.Amount.IsPositive() {
 		return sdkerrors.Wrap(sdkerrors.ErrInvalidCoins, m.Collateral.String())
 	}
-	if m.RepayInMax.Denom != blackfury.MicroUSMDenom {
+	if m.RepayInMax.Denom != blackfury.MicroUSBXDenom {
 		return sdkerrors.Wrapf(sdkerrors.ErrInvalidCoins, "invalid coin: %s", m.RepayInMax.Denom)
 	}
 	if !m.RepayInMax.Amount.IsPositive() {
