@@ -223,7 +223,7 @@ func initTestnetFiles(
 	args initArgs,
 ) error {
 	if args.chainID == "" {
-		args.chainID = fmt.Sprintf("blackfury_%d-1", tmrand.Intn(1000000))
+		args.chainID = fmt.Sprintf("highbury_%d-1", tmrand.Intn(1000000))
 	}
 
 	nodeIDs := make([]string, args.numValidators)

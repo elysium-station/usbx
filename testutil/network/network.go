@@ -108,7 +108,7 @@ func DefaultConfig() Config {
 		AppConstructor:    NewAppConstructor(encCfg),
 		GenesisState:      app.ModuleBasics.DefaultGenesis(encCfg.Marshaler),
 		TimeoutCommit:     2 * time.Second,
-		ChainID:           fmt.Sprintf("blackfury_%d-1", tmrand.Intn(1000000)),
+		ChainID:           fmt.Sprintf("highbury_%d-1", tmrand.Intn(1000000)),
 		NumValidators:     4,
 		BondDenom:         blackfury.BaseDenom,
 		MinGasPrices:      fmt.Sprintf("0.000006%s", blackfury.BaseDenom),
