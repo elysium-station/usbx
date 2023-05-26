@@ -1,0 +1,366 @@
+syntax = "proto3";
+package blackfury.maker.v1;
+
+import "google/api/annotations.proto";
+import "gogoproto/gogo.proto";
+import "cosmos/base/v1beta1/coin.proto";
+
+option go_package = "github.com/elysium-station/blackfury/x/maker/types";
+
+// Msg defines the maker Msg service.
+service Msg {
+  // MintBySwap mints Black stablecoins by swapping in strong-backing assets and
+  // Fury coins.
+  rpc MintBySwap(MsgMintBySwap) returns (MsgMintBySwapResponse) {
+    option (google.api.http).get = "/blackfury/maker/v1/tx/mint_by_swap";
+  }
+
+  // BurnBySwap burns Black stablecoins by swapping out strong-backing assets and
+  // Fury coins.
+  rpc BurnBySwap(MsgBurnBySwap) returns (MsgBurnBySwapResponse) {
+    option (google.api.http).get = "/blackfury/maker/v1/tx/burn_by_swap";
+  }
+
+  // BuyBacking buys strong-backing assets by spending Fury coins.
+  rpc BuyBacking(MsgBuyBacking) returns (MsgBuyBackingResponse) {
+    option (google.api.http).get = "/blackfury/maker/v1/tx/buy_backing";
+  }
+
+  // SellBacking sells strong-backing assets by earning Fury
+  // coins.
+  rpc SellBacking(MsgSellBacking) returns (MsgSellBackingResponse) {
+    option (google.api.http).get = "/blackfury/maker/v1/tx/sell_backing";
+  }
+
+  // MintByCollateral mints Black stablecoins by locking collateral assets and
+  // spending Fury coins.
+  rpc MintByCollateral(MsgMintByCollateral)
+      returns (MsgMintByCollateralResponse) {
+    option (google.api.http).get = "/blackfury/maker/v1/tx/mint_by_collateral";
+  }
+
+  // BurnByCollateral burns Black stablecoins by unlocking collateral assets and
+  // earning Fury coins.
+  rpc BurnByCollateral(MsgBurnByCollateral)
+      returns (MsgBurnByCollateralResponse) {
+    option (google.api.http).get = "/blackfury/maker/v1/tx/burn_by_collateral";
+  }
+
+  // DepositCollateral deposits collateral assets.
+  rpc DepositCollateral(MsgDepositCollateral)
+      returns (MsgDepositCollateralResponse) {
+    option (google.api.http).get = "/blackfury/maker/v1/tx/deposit_collateral";
+  }
+
+  // RedeemCollateral redeems collateral assets and collateralized Fury coins.
+  rpc RedeemCollateral(MsgRedeemCollateral)
+      returns (MsgRedeemCollateralResponse) {
+    option (google.api.http).get = "/blackfury/maker/v1/tx/redeem_collateral";
+  }
+
+  // LiquidateCollateral liquidates collateral assets which is
+  // undercollateralized.
+  rpc LiquidateCollateral(MsgLiquidateCollateral)
+      returns (MsgLiquidateCollateralResponse) {
+    option (google.api.http).get = "/blackfury/maker/v1/tx/liquidate_collateral";
+  }
+}
+
+// MsgMintBySwap represents a message to mint Black stablecoins by swapping.
+message MsgMintBySwap {
+  option (gogoproto.equal) = false;
+  option (gogoproto.goproto_getters) = false;
+
+  string sender = 1 [
+    (gogoproto.jsontag) = "sender",
+    (gogoproto.moretags) = "yaml:\"sender\""
+  ];
+  string to = 2
+      [ (gogoproto.jsontag) = "to", (gogoproto.moretags) = "yaml:\"to\"" ];
+  cosmos.base.v1beta1.Coin backing_in_max = 3 [
+    (gogoproto.moretags) = "yaml:\"backing_in_max\"",
+    (gogoproto.nullable) = false
+  ];
+  cosmos.base.v1beta1.Coin fury_in_max = 4 [
+    (gogoproto.moretags) = "yaml:\"fury_in_max\"",
+    (gogoproto.nullable) = false
+  ];
+  cosmos.base.v1beta1.Coin mint_out_min = 5 [
+    (gogoproto.moretags) = "yaml:\"mint_out_min\"",
+    (gogoproto.nullable) = false
+  ];
+  bool full_backing = 6 [
+    (gogoproto.jsontag) = "full_backing",
+    (gogoproto.moretags) = "yaml:\"full_backing\""
+  ];
+}
+
+// MsgMintBySwapResponse defines the Msg/MintBySwap response type.
+message MsgMintBySwapResponse {
+  cosmos.base.v1beta1.Coin backing_in = 1 [
+    (gogoproto.moretags) = "yaml:\"backing_in\"",
+    (gogoproto.nullable) = false
+  ];
+  cosmos.base.v1beta1.Coin fury_in = 2 [
+    (gogoproto.moretags) = "yaml:\"fury_in\"",
+    (gogoproto.nullable) = false
+  ];
+  cosmos.base.v1beta1.Coin mint_out = 3 [
+    (gogoproto.moretags) = "yaml:\"mint_out\"",
+    (gogoproto.nullable) = false
+  ];
+  cosmos.base.v1beta1.Coin mint_fee = 4 [
+    (gogoproto.moretags) = "yaml:\"mint_fee\"",
+    (gogoproto.nullable) = false
+  ];
+}
+
+// MsgBurnBySwap represents a message to burn Black stablecoins by swapping.
+message MsgBurnBySwap {
+  option (gogoproto.equal) = false;
+  option (gogoproto.goproto_getters) = false;
+
+  string sender = 1 [
+    (gogoproto.jsontag) = "sender",
+    (gogoproto.moretags) = "yaml:\"sender\""
+  ];
+  string to = 2
+      [ (gogoproto.jsontag) = "to", (gogoproto.moretags) = "yaml:\"to\"" ];
+  cosmos.base.v1beta1.Coin burn_in = 3 [
+    (gogoproto.moretags) = "yaml:\"burn_in\"",
+    (gogoproto.nullable) = false
+  ];
+  cosmos.base.v1beta1.Coin backing_out_min = 4 [
+    (gogoproto.moretags) = "yaml:\"backing_out_min\"",
+    (gogoproto.nullable) = false
+  ];
+  cosmos.base.v1beta1.Coin fury_out_min = 5 [
+    (gogoproto.moretags) = "yaml:\"fury_out_min\"",
+    (gogoproto.nullable) = false
+  ];
+}
+
+// MsgBurnBySwapResponse defines the Msg/BurnBySwap response type.
+message MsgBurnBySwapResponse {
+  cosmos.base.v1beta1.Coin backing_out = 1 [
+    (gogoproto.moretags) = "yaml:\"backing_out\"",
+    (gogoproto.nullable) = false
+  ];
+  cosmos.base.v1beta1.Coin fury_out = 2 [
+    (gogoproto.moretags) = "yaml:\"fury_out\"",
+    (gogoproto.nullable) = false
+  ];
+  cosmos.base.v1beta1.Coin burn_fee = 3 [
+    (gogoproto.moretags) = "yaml:\"burn_fee\"",
+    (gogoproto.nullable) = false
+  ];
+}
+
+// MsgBuyBacking represents a message to buy strong-backing assets.
+message MsgBuyBacking {
+  option (gogoproto.equal) = false;
+  option (gogoproto.goproto_getters) = false;
+
+  string sender = 1 [
+    (gogoproto.jsontag) = "sender",
+    (gogoproto.moretags) = "yaml:\"sender\""
+  ];
+  string to = 2
+      [ (gogoproto.jsontag) = "to", (gogoproto.moretags) = "yaml:\"to\"" ];
+  cosmos.base.v1beta1.Coin fury_in = 3 [
+    (gogoproto.moretags) = "yaml:\"fury_in\"",
+    (gogoproto.nullable) = false
+  ];
+  cosmos.base.v1beta1.Coin backing_out_min = 4 [
+    (gogoproto.moretags) = "yaml:\"backing_out_min\"",
+    (gogoproto.nullable) = false
+  ];
+}
+
+// MsgBuyBackingResponse defines the Msg/BuyBacking response type.
+message MsgBuyBackingResponse {
+  cosmos.base.v1beta1.Coin backing_out = 1 [
+    (gogoproto.moretags) = "yaml:\"backing_out\"",
+    (gogoproto.nullable) = false
+  ];
+  cosmos.base.v1beta1.Coin buyback_fee = 2 [
+    (gogoproto.moretags) = "yaml:\"buyback_fee\"",
+    (gogoproto.nullable) = false
+  ];
+}
+
+// MsgSellBacking represents a message to sell strong-backing
+// assets.
+message MsgSellBacking {
+  option (gogoproto.equal) = false;
+  option (gogoproto.goproto_getters) = false;
+
+  string sender = 1 [
+    (gogoproto.jsontag) = "sender",
+    (gogoproto.moretags) = "yaml:\"sender\""
+  ];
+  string to = 2
+      [ (gogoproto.jsontag) = "to", (gogoproto.moretags) = "yaml:\"to\"" ];
+  cosmos.base.v1beta1.Coin backing_in = 3 [
+    (gogoproto.moretags) = "yaml:\"backing_in\"",
+    (gogoproto.nullable) = false
+  ];
+  cosmos.base.v1beta1.Coin fury_out_min = 4 [
+    (gogoproto.moretags) = "yaml:\"fury_out_min\"",
+    (gogoproto.nullable) = false
+  ];
+}
+
+// MsgSellBackingResponse defines the Msg/SellBacking response type.
+message MsgSellBackingResponse {
+  cosmos.base.v1beta1.Coin fury_out = 1 [
+    (gogoproto.moretags) = "yaml:\"fury_out\"",
+    (gogoproto.nullable) = false
+  ];
+  cosmos.base.v1beta1.Coin reback_fee = 2 [
+    (gogoproto.moretags) = "yaml:\"reback_fee\"",
+    (gogoproto.nullable) = false
+  ];
+}
+
+// MsgMintByCollateral represents a message to mint Black stablecoins by locking
+// collateral.
+message MsgMintByCollateral {
+  option (gogoproto.equal) = false;
+  option (gogoproto.goproto_getters) = false;
+
+  string sender = 1 [
+    (gogoproto.jsontag) = "sender",
+    (gogoproto.moretags) = "yaml:\"sender\""
+  ];
+  string to = 2
+      [ (gogoproto.jsontag) = "to", (gogoproto.moretags) = "yaml:\"to\"" ];
+  string collateral_denom = 3 [
+    (gogoproto.jsontag) = "collateral_denom",
+    (gogoproto.moretags) = "yaml:\"collateral_denom\""
+  ];
+  cosmos.base.v1beta1.Coin mint_out = 4 [
+    (gogoproto.moretags) = "yaml:\"mint_out\"",
+    (gogoproto.nullable) = false
+  ];
+}
+
+// MsgMintByCollateralResponse defines the Msg/MintByCollateral response type.
+message MsgMintByCollateralResponse {
+  cosmos.base.v1beta1.Coin mint_fee = 1 [
+    (gogoproto.moretags) = "yaml:\"mint_fee\"",
+    (gogoproto.nullable) = false
+  ];
+}
+
+// MsgBurnByCollateral represents a message to burn Black stablecoins by unlocking
+// collateral.
+message MsgBurnByCollateral {
+  option (gogoproto.equal) = false;
+  option (gogoproto.goproto_getters) = false;
+
+  string sender = 1 [
+    (gogoproto.jsontag) = "sender",
+    (gogoproto.moretags) = "yaml:\"sender\""
+  ];
+  string collateral_denom = 2 [
+    (gogoproto.jsontag) = "collateral_denom",
+    (gogoproto.moretags) = "yaml:\"collateral_denom\""
+  ];
+  cosmos.base.v1beta1.Coin repay_in_max = 3 [
+    (gogoproto.moretags) = "yaml:\"repay_in_max\"",
+    (gogoproto.nullable) = false
+  ];
+}
+
+// MsgBurnByCollateralResponse defines the Msg/BurnByCollateral response type.
+message MsgBurnByCollateralResponse {
+  cosmos.base.v1beta1.Coin repay_in = 1 [
+    (gogoproto.moretags) = "yaml:\"repay_in\"",
+    (gogoproto.nullable) = false
+  ];
+}
+
+// MsgDepositCollateral represents a message to deposit collateral assets.
+message MsgDepositCollateral {
+  option (gogoproto.equal) = false;
+  option (gogoproto.goproto_getters) = false;
+
+  string sender = 1 [
+    (gogoproto.jsontag) = "sender",
+    (gogoproto.moretags) = "yaml:\"sender\""
+  ];
+  string to = 2
+      [ (gogoproto.jsontag) = "to", (gogoproto.moretags) = "yaml:\"to\"" ];
+  cosmos.base.v1beta1.Coin collateral_in = 3 [
+    (gogoproto.moretags) = "yaml:\"collateral_in\"",
+    (gogoproto.nullable) = false
+  ];
+  cosmos.base.v1beta1.Coin fury_in = 4 [
+    (gogoproto.moretags) = "yaml:\"fury_in\"",
+    (gogoproto.nullable) = false
+  ];
+}
+
+// MsgDepositCollateralResponse defines the Msg/DepositCollateral response type.
+message MsgDepositCollateralResponse {}
+
+// MsgRedeemCollateral represents a message to redeem collateral assets and
+// collateralized Fury coins.
+message MsgRedeemCollateral {
+  option (gogoproto.equal) = false;
+  option (gogoproto.goproto_getters) = false;
+
+  string sender = 1 [
+    (gogoproto.jsontag) = "sender",
+    (gogoproto.moretags) = "yaml:\"sender\""
+  ];
+  string to = 2
+      [ (gogoproto.jsontag) = "to", (gogoproto.moretags) = "yaml:\"to\"" ];
+  cosmos.base.v1beta1.Coin collateral_out = 3 [
+    (gogoproto.moretags) = "yaml:\"collateral_out\"",
+    (gogoproto.nullable) = false
+  ];
+  cosmos.base.v1beta1.Coin fury_out = 4 [
+    (gogoproto.moretags) = "yaml:\"fury_out\"",
+    (gogoproto.nullable) = false
+  ];
+}
+
+// MsgRedeemCollateralResponse defines the Msg/RedeemCollateral response type.
+message MsgRedeemCollateralResponse {}
+
+// MsgLiquidateCollateral represents a message to liquidates collateral assets.
+message MsgLiquidateCollateral {
+  option (gogoproto.equal) = false;
+  option (gogoproto.goproto_getters) = false;
+
+  string sender = 1 [
+    (gogoproto.jsontag) = "sender",
+    (gogoproto.moretags) = "yaml:\"sender\""
+  ];
+  string to = 2
+      [ (gogoproto.jsontag) = "to", (gogoproto.moretags) = "yaml:\"to\"" ];
+  string debtor = 3 [ (gogoproto.moretags) = "yaml:\"to\"" ];
+  cosmos.base.v1beta1.Coin collateral = 4 [
+    (gogoproto.moretags) = "yaml:\"collateral\"",
+    (gogoproto.nullable) = false
+  ];
+  cosmos.base.v1beta1.Coin repay_in_max = 5 [
+    (gogoproto.moretags) = "yaml:\"repay_in_max\"",
+    (gogoproto.nullable) = false
+  ];
+}
+
+// MsgLiquidateCollateralResponse defines the Msg/LiquidateCollateral response
+// type.
+message MsgLiquidateCollateralResponse {
+  cosmos.base.v1beta1.Coin repay_in = 1 [
+    (gogoproto.moretags) = "yaml:\"repay_in\"",
+    (gogoproto.nullable) = false
+  ];
+  cosmos.base.v1beta1.Coin collateral_out = 2 [
+    (gogoproto.moretags) = "yaml:\"collateral_out\"",
+    (gogoproto.nullable) = false
+  ];
+}

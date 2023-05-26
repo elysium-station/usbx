@@ -1,0 +1,72 @@
+version: '3'
+
+services:
+  blackfurydnode0:
+    container_name: blackfurydnode0
+    image: "blackfuryzone/localnetnode"
+    ports:
+      - "26656-26657:26656-26657"
+      - "8545-8546:8545-8546"
+      - "9090-9091:9090-9091"
+      - "1317:1317"
+    environment:
+      - ID=0
+      - LOG=${LOG:-blackfuryd.log}
+    volumes:
+      - ./build:/blackfury:Z
+    networks:
+      localnet:
+        ipv4_address: 192.168.10.2
+
+  blackfurydnode1:
+    container_name: blackfurydnode1
+    image: "blackfuryzone/localnetnode"
+    ports:
+      - "26659-26660:26656-26657"
+      - "8547-8548:8545-8546"
+    environment:
+      - ID=1
+      - LOG=${LOG:-blackfuryd.log}
+    volumes:
+      - ./build:/blackfury:Z
+    networks:
+      localnet:
+        ipv4_address: 192.168.10.3
+
+  blackfurydnode2:
+    container_name: blackfurydnode2
+    image: "blackfuryzone/localnetnode"
+    environment:
+      - ID=2
+      - LOG=${LOG:-blackfuryd.log}
+    ports:
+      - "26661-26662:26656-26657"
+      - "8549-8550:8545-8546"
+    volumes:
+      - ./build:/blackfury:Z
+    networks:
+      localnet:
+        ipv4_address: 192.168.10.4
+
+  blackfurydnode3:
+    container_name: blackfurydnode3
+    image: "blackfuryzone/localnetnode"
+    environment:
+      - ID=3
+      - LOG=${LOG:-blackfuryd.log}
+    ports:
+      - "26663-26664:26656-26657"
+      - "8551-8552:8545-8546"
+    volumes:
+      - ./build:/blackfury:Z
+    networks:
+      localnet:
+        ipv4_address: 192.168.10.5
+
+networks:
+  localnet:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 192.168.10.0/24

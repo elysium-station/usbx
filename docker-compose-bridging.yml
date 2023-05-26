@@ -1,0 +1,72 @@
+version: '3'
+
+services:
+  bridging-blackfurydnode0:
+    container_name: bridging-blackfurydnode0
+    image: "blackfuryzone/localnetnode"
+    ports:
+      - "27656-27657:26656-26657"
+      - "8645-8646:8545-8546"
+      - "9190-9191:9090-9091"
+      - "1417:1317"
+    environment:
+      - ID=0
+      - LOG=${LOG:-blackfuryd.log}
+    volumes:
+      - ./build-bridging:/blackfury:Z
+    networks:
+      bridging-localnet:
+        ipv4_address: 192.168.11.2
+
+  bridging-blackfurydnode1:
+    container_name: bridging-blackfurydnode1
+    image: "blackfuryzone/localnetnode"
+    ports:
+      - "27659-27660:26656-26657"
+      - "8647-8648:8545-8546"
+    environment:
+      - ID=1
+      - LOG=${LOG:-blackfuryd.log}
+    volumes:
+      - ./build-bridging:/blackfury:Z
+    networks:
+      bridging-localnet:
+        ipv4_address: 192.168.11.3
+
+  bridging-blackfurydnode2:
+    container_name: bridging-blackfurydnode2
+    image: "blackfuryzone/localnetnode"
+    environment:
+      - ID=2
+      - LOG=${LOG:-blackfuryd.log}
+    ports:
+      - "27661-27662:26656-26657"
+      - "8649-8650:8545-8546"
+    volumes:
+      - ./build-bridging:/blackfury:Z
+    networks:
+      bridging-localnet:
+        ipv4_address: 192.168.11.4
+
+  bridging-blackfurydnode3:
+    container_name: bridging-blackfurydnode3
+    image: "blackfuryzone/localnetnode"
+    environment:
+      - ID=3
+      - LOG=${LOG:-blackfuryd.log}
+    ports:
+      - "27663-27664:26656-26657"
+      - "8651-8652:8545-8546"
+    volumes:
+      - ./build-bridging:/blackfury:Z
+    networks:
+      bridging-localnet:
+        ipv4_address: 192.168.11.5
+
+networks:
+  bridging-localnet:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 192.168.11.0/24

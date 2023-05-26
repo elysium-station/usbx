@@ -1,0 +1,4 @@
+syntax = "proto3";
+package blackfury.gauge.v1;
+
+option go_package = "github.com/elysium-station/blackfury/x/gauge/types";
